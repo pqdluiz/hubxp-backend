@@ -1,5 +1,5 @@
 import { Controller, Get, Res, Req, Body, Post, Param, Put, Delete } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Response } from 'express';
 import { StudentsService } from './students.service';
 import { Prisma } from '@prisma/client';
 
