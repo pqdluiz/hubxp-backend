@@ -6,6 +6,10 @@ import { PrismaService } from 'src/prisma';
 export class CoursesService {
   constructor(private readonly prisma: PrismaService) {}
 
+  public async findAllCourses(): Promise<Courses[]> {
+    return await this.prisma.courses.findMany();
+  }
+
   public async createCourse(
     course: Prisma.CoursesCreateInput,
   ): Promise<Courses> {

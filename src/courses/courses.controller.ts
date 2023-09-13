@@ -7,6 +7,7 @@ import {
   Delete,
   Put,
   Post,
+  Get
 } from '@nestjs/common';
 import { Response } from 'express';
 import { CoursesService } from './courses.service';
@@ -16,15 +17,26 @@ import { Prisma } from '@prisma/client';
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
+  @Get("")
+  public async findAllCourses(@Res( ) response: Response) {
+    const courses = await this.coursesService.findAllCourses()
+
+    try {
+      response.status(200).json(courses)
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
   @Post('')
   public async createCourse(
     @Req() @Body() request: Prisma.CoursesCreateInput,
     @Res() response: Response,
   ): Promise<Response> {
-    const course = this.coursesService.createCourse(request);
+    const course = await this.coursesService.createCourse(request);
 
     try {
-      return response.status(200).json(course);
+      return response.status(201).json(course);
     } catch (error) {
       throw new Error(error);
     }
