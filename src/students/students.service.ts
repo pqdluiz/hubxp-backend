@@ -16,6 +16,10 @@ export class StudentsService {
     return await this.prisma.students.findMany();
   }
 
+  public async findOneStudent(id: string): Promise<Students> {
+    return await this.prisma.students.findUnique({ where: { id: id } });
+  }
+
   public async removeStudent(id: string): Promise<Students> {
     return await this.prisma.students.delete({ where: { id: id } });
   }

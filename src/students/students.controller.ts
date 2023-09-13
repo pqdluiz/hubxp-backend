@@ -18,6 +18,17 @@ export class StudentsController {
     }
   }
 
+  @Get(':id')
+  async findOneStudent(@Param("id") id: string, @Res() response: Response) {
+    const students = await this.studentService.findOneStudent(id);
+
+    try {
+      response.status(200).json(students);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   @Post('')
   async createStudent(
     @Req() @Body() request: Prisma.StudentsCreateInput,
@@ -38,7 +49,7 @@ export class StudentsController {
     @Param('id') id: string,
     @Res() response: Response,
   ) {
-    const student = this.studentService.updateStudent(request, id);
+    const student = await this.studentService.updateStudent(request, id);
 
     try {
       response.status(202).json(student);
