@@ -9,9 +9,9 @@ import {
   Post,
   Get
 } from '@nestjs/common';
-import { Response } from 'express';
+import type { Response } from 'express';
 import { CoursesService } from './courses.service';
-import { Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 
 @Controller('courses')
 export class CoursesController {
@@ -22,9 +22,9 @@ export class CoursesController {
     const courses = await this.coursesService.findAllCourses()
 
     try {
-      response.status(200).json(courses)
+      return response.status(200).json(courses);
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
   }
 

@@ -1,7 +1,7 @@
 import { Controller, Get, Res, Req, Body, Post, Param, Put, Delete } from '@nestjs/common';
-import { Response } from 'express';
+import type { Response } from 'express';
 import { StudentsService } from './students.service';
-import { Prisma } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 
 @Controller('students')
 export class StudentsController {
@@ -12,7 +12,7 @@ export class StudentsController {
     const students = await this.studentService.findAllStudents();
 
     try {
-      response.status(200).json(students);
+      return response.status(200).json(students);
     } catch (error) {
       throw new Error(error);
     }
@@ -23,7 +23,7 @@ export class StudentsController {
     const students = await this.studentService.findOneStudent(id);
 
     try {
-      response.status(200).json(students);
+      return response.status(200).json(students);
     } catch (error) {
       throw new Error(error);
     }
@@ -37,7 +37,7 @@ export class StudentsController {
     const student = await this.studentService.createStudent(request);
 
     try {
-      response.status(201).json(student);
+      return response.status(201).json(student);
     } catch (error) {
       throw new Error(error);
     }
@@ -52,7 +52,7 @@ export class StudentsController {
     const student = await this.studentService.updateStudent(request, id);
 
     try {
-      response.status(202).json(student);
+      return response.status(202).json(student);
     } catch (error) {
       throw new Error(error);
     }
@@ -63,7 +63,7 @@ export class StudentsController {
     const student = await this.studentService.removeStudent(id);
 
     try {
-      response.status(202).json(student);
+      return response.status(202).json(student);
     } catch (error) {
       throw new Error(error);
     }
