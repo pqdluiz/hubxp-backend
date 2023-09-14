@@ -13,6 +13,8 @@ import {
 import type { Response } from 'express';
 import { StudentsService } from './students.service';
 import type { Prisma } from '@prisma/client';
+import { ApiBody } from '@nestjs/swagger';
+import { options } from './options';
 
 @Controller('students')
 export class StudentsController {
@@ -47,6 +49,7 @@ export class StudentsController {
 
   @Post('')
   @HttpCode(201)
+  @ApiBody(options)
   public async createStudent(
     @Req() @Body() request: Prisma.StudentsCreateInput,
     @Res() response: Response,
@@ -61,6 +64,7 @@ export class StudentsController {
   }
 
   @Put(':id')
+  @ApiBody(options)
   @HttpCode(202)
   public async updateStudent(
     @Req() @Body() request: Prisma.StudentsUpdateInput,
