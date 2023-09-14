@@ -13,7 +13,7 @@ async function bootstrap(): Promise<void> {
     .build();
   const document = SwaggerModule.createDocument(app, config);
 
-  if(process.env.ENVIRONMENT === "develop") {
+  if (process.env.ENVIRONMENT === 'develop') {
     SwaggerModule.setup('api', app, document);
   }
 
