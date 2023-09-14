@@ -1,4 +1,14 @@
-import { Controller, Get, Res, Req, Body, Post, Param, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Res,
+  Req,
+  Body,
+  Post,
+  Param,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import type { Response } from 'express';
 import { StudentsService } from './students.service';
 import type { Prisma } from '@prisma/client';
@@ -8,7 +18,7 @@ export class StudentsController {
   constructor(private readonly studentService: StudentsService) {}
 
   @Get('')
-  async findAllStudents(@Res() response: Response) {
+  public async findAllStudents(@Res() response: Response) {
     const students = await this.studentService.findAllStudents();
 
     try {
@@ -19,7 +29,10 @@ export class StudentsController {
   }
 
   @Get(':id')
-  async findOneStudent(@Param("id") id: string, @Res() response: Response) {
+  public async findOneStudent(
+    @Param('id') id: string,
+    @Res() response: Response,
+  ) {
     const students = await this.studentService.findOneStudent(id);
 
     try {
@@ -30,7 +43,7 @@ export class StudentsController {
   }
 
   @Post('')
-  async createStudent(
+  public async createStudent(
     @Req() @Body() request: Prisma.StudentsCreateInput,
     @Res() response: Response,
   ) {
@@ -44,7 +57,7 @@ export class StudentsController {
   }
 
   @Put(':id')
-  async updateStudent(
+  public async updateStudent(
     @Req() @Body() request: Prisma.StudentsUpdateInput,
     @Param('id') id: string,
     @Res() response: Response,
@@ -58,8 +71,11 @@ export class StudentsController {
     }
   }
 
-  @Delete(":id")
-  async removeStudent(@Param("id") id: string, @Res() response: Response) {
+  @Delete(':id')
+  public async removeStudent(
+    @Param('id') id: string,
+    @Res() response: Response,
+  ) {
     const student = await this.studentService.removeStudent(id);
 
     try {

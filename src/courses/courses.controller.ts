@@ -7,7 +7,7 @@ import {
   Delete,
   Put,
   Post,
-  Get
+  Get,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { CoursesService } from './courses.service';
@@ -17,9 +17,9 @@ import type { Prisma } from '@prisma/client';
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
-  @Get("")
-  public async findAllCourses(@Res( ) response: Response) {
-    const courses = await this.coursesService.findAllCourses()
+  @Get('')
+  public async findAllCourses(@Res() response: Response) {
+    const courses = await this.coursesService.findAllCourses();
 
     try {
       return response.status(200).json(courses);
