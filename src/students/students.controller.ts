@@ -8,6 +8,7 @@ import {
   Param,
   Put,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { StudentsService } from './students.service';
@@ -18,7 +19,8 @@ export class StudentsController {
   constructor(private readonly studentService: StudentsService) {}
 
   @Get('')
-  public async findAllStudents(@Res() response: Response) {
+  @HttpCode(200)
+  public async findAllStudents(@Res() response: Response): Promise<Response> {
     const students = await this.studentService.findAllStudents();
 
     try {
@@ -29,10 +31,11 @@ export class StudentsController {
   }
 
   @Get(':id')
+  @HttpCode(200)
   public async findOneStudent(
     @Param('id') id: string,
     @Res() response: Response,
-  ) {
+  ): Promise<Response> {
     const students = await this.studentService.findOneStudent(id);
 
     try {
@@ -43,10 +46,11 @@ export class StudentsController {
   }
 
   @Post('')
+  @HttpCode(201)
   public async createStudent(
     @Req() @Body() request: Prisma.StudentsCreateInput,
     @Res() response: Response,
-  ) {
+  ): Promise<Response> {
     const student = await this.studentService.createStudent(request);
 
     try {
@@ -57,11 +61,12 @@ export class StudentsController {
   }
 
   @Put(':id')
+  @HttpCode(202)
   public async updateStudent(
     @Req() @Body() request: Prisma.StudentsUpdateInput,
     @Param('id') id: string,
     @Res() response: Response,
-  ) {
+  ): Promise<Response> {
     const student = await this.studentService.updateStudent(request, id);
 
     try {
@@ -72,10 +77,11 @@ export class StudentsController {
   }
 
   @Delete(':id')
+  @HttpCode(202)
   public async removeStudent(
     @Param('id') id: string,
     @Res() response: Response,
-  ) {
+  ): Promise<Response> {
     const student = await this.studentService.removeStudent(id);
 
     try {

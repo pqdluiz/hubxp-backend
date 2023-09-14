@@ -8,6 +8,7 @@ import {
   Put,
   Post,
   Get,
+  HttpCode,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { CoursesService } from './courses.service';
@@ -18,7 +19,8 @@ export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
   @Get('')
-  public async findAllCourses(@Res() response: Response) {
+  @HttpCode(200)
+  public async findAllCourses(@Res() response: Response): Promise<Response> {
     const courses = await this.coursesService.findAllCourses();
 
     try {
@@ -29,6 +31,7 @@ export class CoursesController {
   }
 
   @Post('')
+  @HttpCode(201)
   public async createCourse(
     @Req() @Body() request: Prisma.CoursesCreateInput,
     @Res() response: Response,
@@ -43,11 +46,12 @@ export class CoursesController {
   }
 
   @Put(':id')
+  @HttpCode(202)
   public async updateCourse(
     @Param('id') id: string,
     @Req() @Body() request: Prisma.CoursesUpdateInput,
     @Res() response: Response,
-  ) {
+  ): Promise<Response> {
     const course = await this.coursesService.updateCourse(request, id);
 
     try {
@@ -58,14 +62,15 @@ export class CoursesController {
   }
 
   @Delete('id')
+  @HttpCode(204)
   public async removeCourse(
     @Param('id') id: string,
     @Res() response: Response,
-  ) {
+  ): Promise<Response> {
     const course = await this.coursesService.removeCourse(id);
 
     try {
-      return response.status(202).json(course);
+      return response.status(204).json(course);
     } catch (error) {
       throw new Error(error);
     }
